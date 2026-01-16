@@ -156,13 +156,13 @@ export function ActionPlanGrid() {
                     <table className="w-full text-[11px] text-left border-collapse table-fixed font-medium">
                         <thead className="bg-[#f1f5f9] dark:bg-[#1e293b] text-[#334155] dark:text-slate-200 uppercase text-[10px] tracking-wider font-bold border-b border-border">
                             <tr>
-                                <th className="px-2 py-2 w-[12%] text-center border-r border-border/50">Processo</th>
-                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Team Leader</th>
-                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Planner</th>
-                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Fornecedor</th>
+                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Processo</th>
+                                <th className="px-2 py-2 w-[9%] text-center border-r border-border/50">Team Leader</th>
+                                <th className="px-2 py-2 w-[9%] text-center border-r border-border/50">Planner</th>
+                                <th className="px-2 py-2 w-[9%] text-center border-r border-border/50">Fornecedor</th>
                                 <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">PN / Motivo</th>
                                 <th className="px-2 py-2 w-[7%] text-center border-r border-border/50">Índice Atual</th>
-                                <th className="px-2 py-2 w-[15%] text-left pl-4 border-r border-border/50">Histórico de Ações</th>
+                                <th className="px-2 py-2 w-[20%] text-center border-r border-border/50">Histórico de Ações</th>
                                 <th className="px-2 py-2 w-[7%] text-center border-r border-border/50">Índice Final</th>
                                 <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">Início</th>
                                 <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">Fim</th>
@@ -173,9 +173,9 @@ export function ActionPlanGrid() {
                         <tbody className="divide-y divide-border/30">
                             {paginatedData.map((row, index) => (
                                 <tr key={row.id} className={cn(
-                                    "group transition-colors h-10", // Increased height slightly for better VX
+                                    "group transition-colors h-10",
                                     row.status === "cancelled" ? "opacity-60 bg-red-50/50 dark:bg-red-950/10 grayscale-[0.5]" : "hover:bg-blue-50/50 dark:hover:bg-blue-950/20",
-                                    index % 2 === 0 ? "bg-white dark:bg-[#0f172a]" : "bg-[#f8fafc] dark:bg-[#1e293b]/30" // Zebra Striping
+                                    index % 2 === 0 ? "bg-white dark:bg-[#0f172a]" : "bg-[#f8fafc] dark:bg-[#1e293b]/30"
                                 )}>
                                     <td className="px-2 py-0 border-r border-border/30">
                                         <div className="flex justify-center">
@@ -237,12 +237,14 @@ export function ActionPlanGrid() {
                                         </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.history}
-                                            onSave={(v) => handleUpdate(row.id, "history", v)}
-                                            placeholder="Descrever..."
-                                            className="text-[#334155] dark:text-slate-200 focus:text-foreground text-xs font-medium pl-2"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.history}
+                                                onSave={(v) => handleUpdate(row.id, "history", v)}
+                                                placeholder="Descrever..."
+                                                className="text-[#334155] dark:text-slate-200 focus:text-foreground text-xs font-medium text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30 text-center">
                                         <div className="flex justify-center">
@@ -260,7 +262,7 @@ export function ActionPlanGrid() {
                                                 value={row.startDate}
                                                 onSave={(v) => handleUpdate(row.id, "startDate", v)}
                                                 type="date"
-                                                className="text-[10px] text-center justify-center p-0"
+                                                className="text-xs text-center justify-center p-0"
                                             />
                                         </div>
                                     </td>
@@ -270,7 +272,7 @@ export function ActionPlanGrid() {
                                                 value={row.endDate}
                                                 onSave={(v) => handleUpdate(row.id, "endDate", v)}
                                                 type="date"
-                                                className="text-[10px] text-center justify-center p-0"
+                                                className="text-xs text-center justify-center p-0"
                                             />
                                         </div>
                                     </td>
