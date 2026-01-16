@@ -122,7 +122,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                         <EditableCell
                                             value={row.plannerName}
                                             onSave={(val) => onDataChange(row.id, 'plannerName', val)}
-                                            className="font-semibold text-foreground text-sm p-0 min-h-0 hover:bg-transparent hover:underline decoration-dashed decoration-muted-foreground/30 underline-offset-4"
+                                            className="font-semibold text-foreground text-sm p-0 min-h-0 hover:bg-transparent hover:underline decoration-dashed decoration-muted-foreground/30 underline-offset-4 w-fit flex-initial"
                                         />
                                         <EditableCell
                                             type="select"
@@ -130,7 +130,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                             value={row.plannerLevel}
                                             onSave={(val) => onDataChange(row.id, 'plannerLevel', val)}
                                             className={cn(
-                                                "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center min-h-0 h-auto cursor-pointer",
+                                                "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center min-h-0 h-auto cursor-pointer flex-none",
                                                 "text-foreground bg-background hover:bg-muted", // Default cleaner style
                                                 // Specific styles for select contrast
                                                 "focus:ring-2 focus:ring-primary/20",
