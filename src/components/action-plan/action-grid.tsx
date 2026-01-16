@@ -169,12 +169,12 @@ export function ActionPlanGrid() {
                         <tbody className="divide-y divide-border/30">
                             {paginatedData.map((row, index) => (
                                 <tr key={row.id} className={cn(
-                                    "group transition-colors h-10",
+                                    "group transition-colors", // Removed fixed height, allowing growth
                                     row.status === "cancelled" ? "opacity-60 bg-red-50/50 dark:bg-red-950/10 grayscale-[0.5]" : "hover:bg-blue-50/50 dark:hover:bg-blue-950/20",
                                     index % 2 === 0 ? "bg-white dark:bg-[#0f172a]" : "bg-[#f8fafc] dark:bg-[#1e293b]/30"
                                 )}>
-                                    <td className="px-2 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.process}
                                                 onSave={(v) => handleUpdate(row.id, "process", v)}
@@ -184,8 +184,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-1.5 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.teamLeader}
                                                 onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
@@ -193,8 +193,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.planner}
                                                 onSave={(v) => handleUpdate(row.id, "planner", v)}
@@ -202,8 +202,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.supplier}
                                                 onSave={(v) => handleUpdate(row.id, "supplier", v)}
@@ -212,8 +212,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.pnOrReason}
                                                 onSave={(v) => handleUpdate(row.id, "pnOrReason", v)}
@@ -222,23 +222,24 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 text-center text-xs font-semibold text-[#0f172a] dark:text-white bg-blue-50/30 dark:bg-blue-900/10 border-r border-border/30 h-full align-middle">
-                                        <div className="flex items-center justify-center h-full">
+                                    <td className="px-2 py-3 text-center text-xs font-semibold text-[#0f172a] dark:text-white bg-blue-50/30 dark:bg-blue-900/10 border-r border-border/30 align-middle">
+                                        <div className="flex items-center justify-center">
                                             {row.currentIndex}
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center min-h-[60px]">
                                             <EditableCell
                                                 value={row.history}
                                                 onSave={(v) => handleUpdate(row.id, "history", v)}
                                                 placeholder="Descrever..."
+                                                type="textarea"
                                                 className="text-[#334155] dark:text-slate-200 focus:text-foreground text-xs font-medium text-center justify-center"
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0 border-r border-border/30 text-center">
-                                        <div className="flex justify-center">
+                                    <td className="px-2 py-3 border-r border-border/30 text-center align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.finalIndex}
                                                 onSave={(v) => handleUpdate(row.id, "finalIndex", v)}
@@ -247,8 +248,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-1 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-1 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.startDate}
                                                 onSave={(v) => handleUpdate(row.id, "startDate", v)}
@@ -257,8 +258,8 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-1 py-0 border-r border-border/30">
-                                        <div className="flex justify-center">
+                                    <td className="px-1 py-3 border-r border-border/30 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <EditableCell
                                                 value={row.endDate}
                                                 onSave={(v) => handleUpdate(row.id, "endDate", v)}
@@ -267,19 +268,20 @@ export function ActionPlanGrid() {
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-1 py-0 text-center border-r border-border/30 bg-white/50 dark:bg-black/20">
-                                        <div className="flex justify-center items-center h-full">
+                                    <td className="px-1 py-3 text-center border-r border-border/30 bg-white/50 dark:bg-black/20 align-middle">
+                                        <div className="flex justify-center items-center">
                                             <StatusToggle
                                                 status={row.status}
                                                 onToggle={(s) => handleUpdate(row.id, "status", s)}
                                             />
                                         </div>
                                     </td>
-                                    <td className="px-2 py-0">
+                                    <td className="px-2 py-3 align-middle">
                                         <EditableCell
                                             value={row.observation}
                                             onSave={(v) => handleUpdate(row.id, "observation", v)}
                                             placeholder="..."
+                                            type="textarea"
                                             className="text-xs text-muted-foreground pl-2"
                                         />
                                     </td>
