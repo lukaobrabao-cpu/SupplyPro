@@ -162,26 +162,39 @@ export function ActionPlanGrid() {
                                     row.status === "cancelled" ? "opacity-60 bg-red-950/10 grayscale-[0.5]" : "hover:bg-slate-800/30",
                                     index % 2 === 0 ? "bg-[#0f172a]" : "bg-[#162032]" // Darker alternates
                                 )}>
-                                    {/* 1. Planner (Styled) */}
+                                    {/* 1. Planner (Editable) */}
                                     <td className="px-4 py-3 border-r border-slate-700/30 align-middle">
                                         <div className="flex items-center gap-2">
-                                            <span className="font-bold text-white text-xs">{row.planner}</span>
-                                            {row.plannerLevel && (
-                                                <span className={cn(
-                                                    "px-1.5 py-0.5 rounded-[4px] text-[9px] font-bold uppercase tracking-wider border border-white/10 shadow-sm",
-                                                    row.plannerLevel === "SENIOR" ? "bg-purple-500/20 text-purple-300 border-purple-500/30" :
-                                                        row.plannerLevel === "PLENO" ? "bg-blue-500/20 text-blue-300 border-blue-500/30" :
+                                            <EditableCell
+                                                value={row.planner}
+                                                onSave={(v) => handleUpdate(row.id, "planner", v)}
+                                                className="font-bold text-white text-xs w-auto min-w-[80px]"
+                                            />
+                                            {/* Planner Level Badge Editable */}
+                                            <EditableCell
+                                                value={row.plannerLevel || "JUNIOR"}
+                                                onSave={(v) => handleUpdate(row.id, "plannerLevel", v)}
+                                                type="select"
+                                                options={["JUNIOR", "PLENO", "SENIOR"]}
+                                                className={cn(
+                                                    "px-1.5 py-0.5 rounded-[4px] text-[9px] font-bold uppercase tracking-wider border shadow-sm w-auto min-w-[50px] text-center",
+                                                    (row.plannerLevel === "SENIOR") ? "bg-purple-500/20 text-purple-300 border-purple-500/30" :
+                                                        (row.plannerLevel === "PLENO") ? "bg-blue-500/20 text-blue-300 border-blue-500/30" :
                                                             "bg-slate-500/20 text-slate-300 border-slate-500/30"
-                                                )}>
-                                                    {row.plannerLevel}
-                                                </span>
-                                            )}
+                                                )}
+                                            />
                                         </div>
                                     </td>
 
-                                    {/* 2. Team Leader (Styled) */}
+                                    {/* 2. Team Leader (Editable) */}
                                     <td className="px-4 py-3 border-r border-slate-700/30 align-middle">
-                                        <span className="text-slate-400 font-medium text-xs">{row.teamLeader}</span>
+                                        <EditableCell
+                                            value={row.teamLeader}
+                                            onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
+                                            type="select"
+                                            options={TL_OPTIONS}
+                                            className="text-slate-400 font-medium text-xs"
+                                        />
                                     </td>
 
                                     {/* 3. Processo */}
