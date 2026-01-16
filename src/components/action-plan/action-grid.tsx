@@ -68,10 +68,6 @@ export function ActionPlanGrid() {
     const handleUpdate = (id: string, field: keyof ActionRow, value: any) => {
         setData(prev => prev.map(row => {
             if (row.id === id) {
-                // If Team Leader changes, reset Planner
-                if (field === "teamLeader" && value !== row.teamLeader) {
-                    return { ...row, [field]: value, planner: "" };
-                }
                 return { ...row, [field]: value };
             }
             return row;
@@ -193,8 +189,6 @@ export function ActionPlanGrid() {
                                             <EditableCell
                                                 value={row.teamLeader}
                                                 onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
-                                                type="select"
-                                                options={TL_OPTIONS}
                                                 className="text-xs text-center justify-center"
                                             />
                                         </div>
@@ -204,9 +198,6 @@ export function ActionPlanGrid() {
                                             <EditableCell
                                                 value={row.planner}
                                                 onSave={(v) => handleUpdate(row.id, "planner", v)}
-                                                type="select"
-                                                options={PLANNER_OPTIONS_MAP[row.teamLeader] || []}
-                                                placeholder="Selecione TL"
                                                 className="text-xs text-center justify-center"
                                             />
                                         </div>
