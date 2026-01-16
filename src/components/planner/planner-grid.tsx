@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { ArrowDown, ArrowUp, AlertCircle, AlertTriangle, MoreHorizontal, Download, Filter, Search, ChevronDown, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { EditableCell } from "../action-plan/editable-cell";
 
 export interface PlannerStatusData {
     id: string;
@@ -21,9 +22,10 @@ export interface PlannerStatusData {
 
 interface PlannerGridProps {
     data: PlannerStatusData[];
+    onDataChange: (id: string, field: keyof PlannerStatusData, value: string | number) => void;
 }
 
-export function PlannerGrid({ data }: PlannerGridProps) {
+export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
     const [sortConfig, setSortConfig] = useState<{ key: keyof PlannerStatusData; direction: 'asc' | 'desc' } | null>(null);
 
     const formatCurrency = (value: number) => {
@@ -98,6 +100,7 @@ export function PlannerGrid({ data }: PlannerGridProps) {
                                         col.align === 'center' && "text-center",
                                         col.align === 'right' && "text-right"
                                     )}
+                                    // @ts-ignore
                                     onClick={() => handleSort(col.key as keyof PlannerStatusData)}
                                 >
                                     <div className={cn("flex items-center gap-1", col.align === 'center' && "justify-center", col.align === 'right' && "justify-end")}>
@@ -114,94 +117,123 @@ export function PlannerGrid({ data }: PlannerGridProps) {
                         {sortedData.map((row) => (
                             <tr key={row.id} className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors group">
                                 {/* Planner */}
-                                <td className="px-4 py-3">
-                                    <div className="flex items-center gap-3">
-                                        <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300 border border-border shadow-sm">
-                                            {row.plannerName.split(' ').map(n => n[0]).join('').substring(0, 2)}
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="font-semibold text-foreground">{row.plannerName}</span>
-                                            <span className={cn(
-                                                "text-[10px] w-fit px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border",
-                                                row.plannerLevel === 'Senior' ? "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800" :
-                                                    row.plannerLevel === 'Pleno' ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800" :
-                                                        "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
-                                            )}>
-                                                {row.plannerLevel}
-                                            </span>
+                                <td className="px-4 py-3 min-w-[200px]">
+                                    <div className="flex flex-col gap-1">
+                                        <div className="flex items-center gap-2">
+                                            <EditableCell
+                                                value={row.plannerName}
+                                                onSave={(val) => onDataChange(row.id, 'plannerName', val)}
+                                                className="font-semibold text-foreground text-sm"
+                                            />
+                                            <EditableCell
+                                                type="select"
+                                                options={["Senior", "Pleno", "Junior"]}
+                                                value={row.plannerLevel}
+                                                onSave={(val) => onDataChange(row.id, 'plannerLevel', val)}
+                                                className={cn(
+                                                    "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center",
+                                                    row.plannerLevel === 'Senior' ? "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800" :
+                                                        row.plannerLevel === 'Pleno' ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800" :
+                                                            "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
+                                                )}
+                                            />
                                         </div>
                                     </div>
                                 </td>
 
                                 {/* Team Leader */}
-                                <td className="px-4 py-3 text-muted-foreground font-medium text-xs">
-                                    {row.teamLeader}
+                                <td className="px-4 py-3 text-muted-foreground font-medium text-xs min-w-[150px]">
+                                    <EditableCell
+                                        value={row.teamLeader}
+                                        onSave={(val) => onDataChange(row.id, 'teamLeader', val)}
+                                    />
                                 </td>
 
                                 {/* Qty Suppliers */}
-                                <td className="px-4 py-3 text-center">
-                                    <span className="inline-flex items-center justify-center px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-border">
-                                        {row.qtySuppliers}
-                                    </span>
+                                <td className="px-4 py-3 text-center w-[100px]">
+                                    <EditableCell
+                                        type="number"
+                                        value={row.qtySuppliers}
+                                        onSave={(val) => onDataChange(row.id, 'qtySuppliers', Number(val))}
+                                        className="text-center bg-slate-100 dark:bg-slate-800 border-border"
+                                    />
                                 </td>
 
                                 {/* OTIF < 95 (Critical) */}
-                                <td className="px-4 py-3 text-center">
+                                <td className="px-4 py-3 text-center w-[120px]">
                                     <div className={cn(
-                                        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border transition-all",
+                                        "flex items-center justify-center gap-1.5 px-2 py-1 rounded-full text-xs font-bold border transition-all",
                                         row.suppliersOtifLow > 0
                                             ? "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-900 shadow-sm"
                                             : "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-900"
                                     )}>
-                                        {row.suppliersOtifLow > 0 ? (
-                                            <>
-                                                <AlertCircle size={14} />
-                                                {row.suppliersOtifLow} Critical
-                                            </>
-                                        ) : (
-                                            <>
-                                                <CheckCircle2 size={14} />
-                                                0
-                                            </>
-                                        )}
+                                        {row.suppliersOtifLow > 0 ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}
+                                        <EditableCell
+                                            type="number"
+                                            value={row.suppliersOtifLow}
+                                            onSave={(val) => onDataChange(row.id, 'suppliersOtifLow', Number(val))}
+                                            className="w-8 text-center bg-transparent border-none p-0 focus:ring-0"
+                                        />
                                     </div>
                                 </td>
 
                                 {/* Inconsistencies */}
-                                <td className="px-4 py-3 text-center font-medium">
-                                    {row.inconsistencies > 0 ? (
-                                        <span className="text-amber-600 dark:text-amber-400 flex items-center justify-center gap-1">
-                                            {row.inconsistencies}
-                                            <AlertTriangle size={12} />
-                                        </span>
-                                    ) : (
-                                        <span className="text-muted-foreground/50">-</span>
-                                    )}
+                                <td className="px-4 py-3 text-center font-medium w-[100px]">
+                                    <div className="flex items-center justify-center gap-1">
+                                        <EditableCell
+                                            type="number"
+                                            value={row.inconsistencies}
+                                            onSave={(val) => onDataChange(row.id, 'inconsistencies', Number(val))}
+                                            className={cn("text-center w-12", row.inconsistencies > 0 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-muted-foreground")}
+                                        />
+                                        {row.inconsistencies > 0 && <AlertTriangle size={12} className="text-amber-500" />}
+                                    </div>
                                 </td>
 
                                 {/* Shortages */}
-                                <td className="px-4 py-3 text-center">
-                                    <span className={cn(
-                                        "font-bold tabular-nums",
-                                        row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground"
-                                    )}>
-                                        {row.shortages}
-                                    </span>
+                                <td className="px-4 py-3 text-center w-[100px]">
+                                    <EditableCell
+                                        type="number"
+                                        value={row.shortages}
+                                        onSave={(val) => onDataChange(row.id, 'shortages', Number(val))}
+                                        className={cn("text-center font-bold", row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground")}
+                                    />
                                 </td>
 
                                 {/* Delayed Lines */}
-                                <td className="px-4 py-3 text-center text-muted-foreground">
-                                    {row.linesDelayed}
+                                <td className="px-4 py-3 text-center w-[100px]">
+                                    <EditableCell
+                                        type="number"
+                                        value={row.linesDelayed}
+                                        onSave={(val) => onDataChange(row.id, 'linesDelayed', Number(val))}
+                                        className="text-center text-muted-foreground"
+                                    />
                                 </td>
 
                                 {/* Leftovers Value */}
-                                <td className="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400 tabular-nums">
-                                    {formatCurrency(row.leftoversValue)}
+                                <td className="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400 tabular-nums min-w-[120px]">
+                                    <div className="flex items-center justify-end gap-1">
+                                        <span className="text-[10px] text-muted-foreground">R$</span>
+                                        <EditableCell
+                                            type="number"
+                                            value={row.leftoversValue}
+                                            onSave={(val) => onDataChange(row.id, 'leftoversValue', Number(val))}
+                                            className="text-right"
+                                        />
+                                    </div>
                                 </td>
 
                                 {/* Opportunity Value */}
-                                <td className="px-4 py-3 text-right font-bold text-foreground tabular-nums relative">
-                                    {formatCurrency(row.opportunityValue)}
+                                <td className="px-4 py-3 text-right font-bold text-foreground tabular-nums relative min-w-[140px]">
+                                    <div className="flex items-center justify-end gap-1">
+                                        <span className="text-[10px] text-muted-foreground">R$</span>
+                                        <EditableCell
+                                            type="number"
+                                            value={row.opportunityValue}
+                                            onSave={(val) => onDataChange(row.id, 'opportunityValue', Number(val))}
+                                            className="text-right"
+                                        />
+                                    </div>
                                     {row.opportunityValue > 1000000 && (
                                         <div className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" title="High Opportunity" />
                                     )}
