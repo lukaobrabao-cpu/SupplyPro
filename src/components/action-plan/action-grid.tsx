@@ -130,29 +130,29 @@ export function ActionPlanGrid() {
                         <thead className="bg-[#1e293b] text-slate-400 uppercase text-[10px] tracking-wider font-bold border-b border-border/50">
                             <tr>
                                 {/* 1. Planner */}
-                                <th className="px-4 py-3 w-[14%] text-left border-r border-border/10">Planner</th>
+                                <th className="px-4 py-3 w-[12%] text-left border-r border-border/10">Planner</th>
                                 {/* 2. Team Leader */}
-                                <th className="px-4 py-3 w-[12%] text-left border-r border-border/10">Team Leader</th>
+                                <th className="px-4 py-3 w-[10%] text-left border-r border-border/10">Team Leader</th>
                                 {/* 3. Processo */}
-                                <th className="px-2 py-3 w-[8%] text-center border-r border-border/10">Processo</th>
+                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">Processo</th>
                                 {/* 4. Fornecedor */}
-                                <th className="px-2 py-3 w-[8%] text-center border-r border-border/10">Fornecedor</th>
+                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">Fornecedor</th>
                                 {/* 5. PN / Motivo */}
-                                <th className="px-2 py-3 w-[8%] text-center border-r border-border/10">PN / Motivo</th>
+                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">PN / Motivo</th>
                                 {/* 6. Índice Atual */}
-                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Ind. Atual</th>
+                                <th className="px-2 py-3 w-[5%] text-center border-r border-border/10">Ind. Atual</th>
                                 {/* 7. Histórico */}
-                                <th className="px-2 py-3 w-[18%] text-center border-r border-border/10">Histórico de Ações</th>
+                                <th className="px-2 py-3 w-[15%] text-center border-r border-border/10">Histórico de Ações</th>
                                 {/* 8. Índice Final */}
-                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Ind. Final</th>
+                                <th className="px-2 py-3 w-[5%] text-center border-r border-border/10">Ind. Final</th>
                                 {/* 9. Início */}
-                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Início</th>
+                                <th className="px-2 py-3 w-[8%] text-center border-r border-border/10">Início</th>
                                 {/* 10. Fim */}
-                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Fim</th>
+                                <th className="px-2 py-3 w-[8%] text-center border-r border-border/10">Fim</th>
                                 {/* 11. Status */}
                                 <th className="px-1 py-3 w-[4%] text-center border-r border-border/10">Status</th>
                                 {/* 12. Obs */}
-                                <th className="px-2 py-3 w-[4%] text-center">Obs</th>
+                                <th className="px-2 py-3 w-[12%] text-center">Obs</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-800/50">
