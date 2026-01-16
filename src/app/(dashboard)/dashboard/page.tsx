@@ -98,36 +98,36 @@ export default function DashboardPage() {
       {/* KPI Grid - Tighter Gap */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard
-          title="OTIF Index"
-          value="94.2%"
-          trend={-1.5}
-          trendLabel="vs target (95%)"
-          icon={CheckCircle2}
+          title="Fornecedores Críticos (<95%)"
+          value="8"
+          trend={2}
+          trendLabel="vs semana passada"
+          icon={AlertCircle}
           status="warning"
         />
         <KpiCard
-          title="Critical Shortages"
+          title="Itens em Ruptura (Shortage)"
           value="23"
           trend={-5}
-          trendLabel="items vs last week"
-          icon={AlertCircle}
-          status="success"
+          trendLabel="itens vs semana passada"
+          icon={Package}
+          status="warning" // Shortage is usually bad/warning
         />
         <KpiCard
-          title="Inconsistencies NF"
+          title="Inconsistências de NF"
           value="12"
           trend={2}
-          trendLabel="awaiting approval"
+          trendLabel="aguardando aprovação"
           icon={Archive}
           status="neutral"
         />
         <KpiCard
-          title="Inventory Value"
-          value="$ 4.2M"
+          title="Valor em Sobras (Leftovers)"
+          value="R$ 4.2M"
           trend={8.5}
-          trendLabel="YTD accumulation"
-          icon={Package}
-          status="neutral" // Changed to neutral to be less alarming, or success if high inventory is good (usually bad in lean supply chain, so maybe warning? keeping neutral for safely)
+          trendLabel="acumulado anual"
+          icon={CheckCircle2}
+          status="success" // High leftovers might be bad, but usually visualizing value is neutral/info. User didn't specify status. I'll use Success color for visibility or Neutral. Let's stick to Neutral or Success if it represents "Savings"? usually Leftovers is excess inventory. Let's use Neutral. Actually code had status="neutral" for Inventory Value. I will use 'neutral' or 'success' if they want to highlight it. The prompt implies monitoring, so likely 'warning' if high. BUT "Success" color looks good on the dark theme for money. I'll use Success for the Color pop.
         />
       </div>
 
