@@ -98,7 +98,7 @@ export default function DashboardPage() {
       {/* KPI Grid - Tighter Gap */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard
-          title="Fornecedores Críticos (<95%)"
+          title="OTIF <95"
           value="8"
           trend={2}
           trendLabel="vs semana passada"
@@ -106,7 +106,7 @@ export default function DashboardPage() {
           status="warning"
         />
         <KpiCard
-          title="Itens em Ruptura (Shortage)"
+          title="SHORTAGE"
           value="23"
           trend={-5}
           trendLabel="itens vs semana passada"
@@ -114,7 +114,7 @@ export default function DashboardPage() {
           status="warning" // Shortage is usually bad/warning
         />
         <KpiCard
-          title="Inconsistências de NF"
+          title="INCONSISTENCIAS NF"
           value="12"
           trend={2}
           trendLabel="aguardando aprovação"
@@ -122,7 +122,7 @@ export default function DashboardPage() {
           status="neutral"
         />
         <KpiCard
-          title="Valor em Sobras (Leftovers)"
+          title="LEFTOVERS"
           value="R$ 4.2M"
           trend={8.5}
           trendLabel="acumulado anual"
