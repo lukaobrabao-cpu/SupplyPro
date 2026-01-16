@@ -187,27 +187,27 @@ export function ActionPlanGrid() {
                                     {/* 3. Processo */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle">
                                         <div className="flex justify-center">
-                                            <EditableCell value={row.process} onSave={(v) => handleUpdate(row.id, "process", v)} type="select" options={PROCESS_OPTIONS} className="text-center justify-center text-slate-300" />
+                                            <EditableCell value={row.process} onSave={(v) => handleUpdate(row.id, "process", v)} type="select" options={PROCESS_OPTIONS} className="text-center justify-center text-slate-300 text-xs font-medium" />
                                         </div>
                                     </td>
 
                                     {/* 4. Fornecedor */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle">
                                         <div className="flex justify-center">
-                                            <EditableCell value={row.supplier} onSave={(v) => handleUpdate(row.id, "supplier", v)} placeholder="—" className="text-center justify-center text-slate-400" />
+                                            <EditableCell value={row.supplier} onSave={(v) => handleUpdate(row.id, "supplier", v)} placeholder="—" className="text-center justify-center text-slate-300 text-xs font-medium" />
                                         </div>
                                     </td>
 
                                     {/* 5. PN / Motivo */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle">
                                         <div className="flex justify-center">
-                                            <EditableCell value={row.pnOrReason} onSave={(v) => handleUpdate(row.id, "pnOrReason", v)} placeholder="—" className="text-center justify-center text-slate-400" />
+                                            <EditableCell value={row.pnOrReason} onSave={(v) => handleUpdate(row.id, "pnOrReason", v)} placeholder="—" className="text-center justify-center text-slate-300 text-xs font-medium" />
                                         </div>
                                     </td>
 
                                     {/* 6. Indice Atual */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle text-center">
-                                        <div className="inline-flex items-center justify-center px-2 py-0.5 rounded bg-blue-900/20 text-blue-200 font-medium">
+                                        <div className="inline-flex items-center justify-center px-2 py-0.5 rounded bg-blue-900/20 text-blue-200 font-medium text-xs">
                                             {row.currentIndex}
                                         </div>
                                     </td>
@@ -215,23 +215,23 @@ export function ActionPlanGrid() {
                                     {/* 7. Historico */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle">
                                         <div className="flex justify-center min-h-[40px]">
-                                            <EditableCell value={row.history} onSave={(v) => handleUpdate(row.id, "history", v)} type="textarea" placeholder="..." className="text-slate-300 text-center justify-center" />
+                                            <EditableCell value={row.history} onSave={(v) => handleUpdate(row.id, "history", v)} type="textarea" placeholder="..." className="text-slate-300 text-center justify-center text-xs font-medium" />
                                         </div>
                                     </td>
 
                                     {/* 8. Indice Final */}
                                     <td className="px-2 py-3 border-r border-slate-700/30 align-middle text-center">
-                                        <EditableCell value={row.finalIndex} onSave={(v) => handleUpdate(row.id, "finalIndex", v)} placeholder="—" className="text-center justify-center font-bold text-emerald-400" />
+                                        <EditableCell value={row.finalIndex} onSave={(v) => handleUpdate(row.id, "finalIndex", v)} placeholder="—" className="text-center justify-center font-bold text-emerald-400 text-xs" />
                                     </td>
 
                                     {/* 9. Início */}
                                     <td className="px-1 py-3 border-r border-slate-700/30 align-middle">
-                                        <EditableCell value={row.startDate} onSave={(v) => handleUpdate(row.id, "startDate", v)} type="date" className="text-center justify-center text-slate-400 p-0" />
+                                        <EditableCell value={row.startDate} onSave={(v) => handleUpdate(row.id, "startDate", v)} type="date" className="text-center justify-center text-slate-300 p-0 text-xs font-medium" />
                                     </td>
 
                                     {/* 10. Fim */}
                                     <td className="px-1 py-3 border-r border-slate-700/30 align-middle">
-                                        <EditableCell value={row.endDate} onSave={(v) => handleUpdate(row.id, "endDate", v)} type="date" className="text-center justify-center text-slate-400 p-0" />
+                                        <EditableCell value={row.endDate} onSave={(v) => handleUpdate(row.id, "endDate", v)} type="date" className="text-center justify-center text-slate-300 p-0 text-xs font-medium" />
                                     </td>
 
                                     {/* 11. Status */}
@@ -241,7 +241,7 @@ export function ActionPlanGrid() {
 
                                     {/* 12. Obs */}
                                     <td className="px-2 py-3 align-middle text-center">
-                                        <EditableCell value={row.observation} onSave={(v) => handleUpdate(row.id, "observation", v)} placeholder="..." type="textarea" className="text-muted-foreground text-center justify-center" />
+                                        <EditableCell value={row.observation} onSave={(v) => handleUpdate(row.id, "observation", v)} placeholder="..." type="textarea" className="text-slate-300 text-center justify-center text-xs font-medium" />
                                     </td>
                                 </tr>
                             ))}
