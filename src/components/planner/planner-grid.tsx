@@ -158,7 +158,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                             type="number"
                                             value={row.qtySuppliers}
                                             onSave={(val) => onDataChange(row.id, 'qtySuppliers', Number(val))}
-                                            className="text-center bg-slate-100 dark:bg-slate-800 border border-border rounded-md px-2 py-0.5 text-xs font-bold min-h-fit w-auto inline-block hover:border-primary/50"
+                                            className="text-center justify-center bg-slate-100 dark:bg-slate-800 border border-border rounded-md px-2 py-0.5 text-xs font-bold min-h-fit w-auto inline-flex hover:border-primary/50"
                                         />
                                     </div>
                                 </td>
@@ -178,7 +178,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                                     type="number"
                                                     value={row.suppliersOtifLow}
                                                     onSave={(val) => onDataChange(row.id, 'suppliersOtifLow', Number(val))}
-                                                    className="w-6 text-center bg-transparent border-none p-0 min-h-0 hover:bg-black/5 rounded-sm"
+                                                    className="w-6 text-center justify-center bg-transparent border-none p-0 min-h-0 hover:bg-black/5 rounded-sm"
                                                 />
                                             </div>
                                         </div>
@@ -187,42 +187,45 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
 
                                 {/* Inconsistencies */}
                                 <td className="px-4 py-3 text-center font-medium w-[100px]">
-                                    <div className="flex items-center justify-center gap-0.5">
+                                    <div className="flex justify-center">
                                         <EditableCell
                                             type="number"
                                             value={row.inconsistencies}
                                             onSave={(val) => onDataChange(row.id, 'inconsistencies', Number(val))}
                                             className={cn(
-                                                "text-center w-8 p-0 min-h-0 hover:bg-muted/50 rounded",
+                                                "text-center justify-center w-10 p-0 min-h-0 hover:bg-muted/50 rounded",
                                                 row.inconsistencies > 0 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-muted-foreground"
                                             )}
                                         />
-                                        {row.inconsistencies > 0 && <AlertTriangle size={12} className="text-amber-500" />}
                                     </div>
                                 </td>
 
                                 {/* Shortages */}
                                 <td className="px-4 py-3 text-center w-[100px]">
-                                    <EditableCell
-                                        type="number"
-                                        value={row.shortages}
-                                        onSave={(val) => onDataChange(row.id, 'shortages', Number(val))}
-                                        className={cn(
-                                            "text-center w-full p-0 min-h-0 hover:bg-muted/50 rounded",
-                                            "font-bold tabular-nums",
-                                            row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground"
-                                        )}
-                                    />
+                                    <div className="flex justify-center">
+                                        <EditableCell
+                                            type="number"
+                                            value={row.shortages}
+                                            onSave={(val) => onDataChange(row.id, 'shortages', Number(val))}
+                                            className={cn(
+                                                "text-center justify-center w-full p-0 min-h-0 hover:bg-muted/50 rounded",
+                                                "font-bold tabular-nums",
+                                                row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground"
+                                            )}
+                                        />
+                                    </div>
                                 </td>
 
                                 {/* Delayed Lines */}
                                 <td className="px-4 py-3 text-center w-[100px]">
-                                    <EditableCell
-                                        type="number"
-                                        value={row.linesDelayed}
-                                        onSave={(val) => onDataChange(row.id, 'linesDelayed', Number(val))}
-                                        className="text-center text-muted-foreground p-0 min-h-0 hover:bg-muted/50 rounded"
-                                    />
+                                    <div className="flex justify-center">
+                                        <EditableCell
+                                            type="number"
+                                            value={row.linesDelayed}
+                                            onSave={(val) => onDataChange(row.id, 'linesDelayed', Number(val))}
+                                            className="text-center justify-center text-muted-foreground p-0 min-h-0 hover:bg-muted/50 rounded"
+                                        />
+                                    </div>
                                 </td>
 
                                 {/* Leftovers Value */}
