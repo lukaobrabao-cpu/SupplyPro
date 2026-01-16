@@ -134,23 +134,23 @@ export default function DashboardPage() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <TrendChart
-          title="OTIF Evolution (4 Weeks)"
-          color="#0f172a" // Deep Navy
+          title="Novas Ações (Últimas 4 Semanas)"
+          color="#3b82f6" // Blue
           data={[
-            { name: "W1", value: 98 },
-            { name: "W2", value: 96 },
-            { name: "W3", value: 92 },
-            { name: "W4", value: 94.2 },
+            { name: "Sem 1", value: 12 },
+            { name: "Sem 2", value: 18 },
+            { name: "Sem 3", value: 15 },
+            { name: "Sem 4", value: 24 },
           ]}
         />
         <TrendChart
-          title="Shortages Trend (4 Weeks)"
-          color="#f59e0b" // Amber
+          title="Ações Concluídas (Últimas 4 Semanas)"
+          color="#10b981" // Emerald (Green like the checkmark)
           data={[
-            { name: "W1", value: 45 },
-            { name: "W2", value: 30 },
-            { name: "W3", value: 28 },
-            { name: "W4", value: 23 },
+            { name: "Sem 1", value: 8 },
+            { name: "Sem 2", value: 12 },
+            { name: "Sem 3", value: 14 },
+            { name: "Sem 4", value: 20 },
           ]}
         />
       </div>
