@@ -32,8 +32,8 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
         }).format(value);
     };
 
@@ -118,26 +118,27 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                             <tr key={row.id} className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors group">
                                 {/* Planner */}
                                 <td className="px-4 py-3 min-w-[200px]">
-                                    <div className="flex flex-col gap-1.5">
-                                        <div className="flex items-center gap-2">
-                                            <EditableCell
-                                                value={row.plannerName}
-                                                onSave={(val) => onDataChange(row.id, 'plannerName', val)}
-                                                className="font-semibold text-foreground text-sm p-0 min-h-0 hover:bg-transparent hover:underline decoration-dashed decoration-muted-foreground/30 underline-offset-4"
-                                            />
-                                            <EditableCell
-                                                type="select"
-                                                options={["Senior", "Pleno", "Junior"]}
-                                                value={row.plannerLevel}
-                                                onSave={(val) => onDataChange(row.id, 'plannerLevel', val)}
-                                                className={cn(
-                                                    "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center min-h-0 h-auto",
-                                                    row.plannerLevel === 'Senior' ? "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800" :
-                                                        row.plannerLevel === 'Pleno' ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800" :
-                                                            "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
-                                                )}
-                                            />
-                                        </div>
+                                    <div className="flex flex-row items-center gap-2">
+                                        <EditableCell
+                                            value={row.plannerName}
+                                            onSave={(val) => onDataChange(row.id, 'plannerName', val)}
+                                            className="font-semibold text-foreground text-sm p-0 min-h-0 hover:bg-transparent hover:underline decoration-dashed decoration-muted-foreground/30 underline-offset-4"
+                                        />
+                                        <EditableCell
+                                            type="select"
+                                            options={["Senior", "Pleno", "Junior"]}
+                                            value={row.plannerLevel}
+                                            onSave={(val) => onDataChange(row.id, 'plannerLevel', val)}
+                                            className={cn(
+                                                "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center min-h-0 h-auto cursor-pointer",
+                                                "text-foreground bg-background hover:bg-muted", // Default cleaner style
+                                                // Specific styles for select contrast
+                                                "focus:ring-2 focus:ring-primary/20",
+                                                row.plannerLevel === 'Senior' ? "border-purple-200 text-purple-700 bg-purple-50 dark:bg-purple-900/20 dark:text-purple-300 dark:border-purple-800" :
+                                                    row.plannerLevel === 'Pleno' ? "border-blue-200 text-blue-700 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800" :
+                                                        "border-slate-200 text-slate-600 bg-slate-50 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
+                                            )}
+                                        />
                                     </div>
                                 </td>
 
@@ -186,13 +187,13 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
 
                                 {/* Inconsistencies */}
                                 <td className="px-4 py-3 text-center font-medium w-[100px]">
-                                    <div className="flex items-center justify-center gap-1">
+                                    <div className="flex items-center justify-center gap-0.5">
                                         <EditableCell
                                             type="number"
                                             value={row.inconsistencies}
                                             onSave={(val) => onDataChange(row.id, 'inconsistencies', Number(val))}
                                             className={cn(
-                                                "text-center w-10 p-0 min-h-0 hover:bg-muted/50 rounded",
+                                                "text-center w-8 p-0 min-h-0 hover:bg-muted/50 rounded",
                                                 row.inconsistencies > 0 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-muted-foreground"
                                             )}
                                         />
@@ -225,7 +226,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 </td>
 
                                 {/* Leftovers Value */}
-                                <td className="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400 tabular-nums min-w-[120px]">
+                                <td className="px-4 py-3 text-right font-medium text-foreground/80 tabular-nums min-w-[120px]">
                                     <div className="flex items-center justify-end gap-1 group/edit cursor-pointer">
                                         <span className="text-[10px] text-muted-foreground pt-0.5">R$</span>
                                         <EditableCell
@@ -238,18 +239,18 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 </td>
 
                                 {/* Opportunity Value */}
-                                <td className="px-4 py-3 text-right font-bold text-foreground tabular-nums relative min-w-[140px]">
+                                <td className="px-4 py-3 text-right font-bold text-emerald-600 dark:text-emerald-400 tabular-nums relative min-w-[140px]">
                                     <div className="flex items-center justify-end gap-1">
-                                        <span className="text-[10px] text-muted-foreground pt-0.5">R$</span>
+                                        <span className="text-[10px] text-emerald-600/70 dark:text-emerald-400/70 pt-0.5">R$</span>
                                         <EditableCell
                                             type="number"
                                             value={row.opportunityValue}
                                             onSave={(val) => onDataChange(row.id, 'opportunityValue', Number(val))}
-                                            className="text-right p-0 min-h-0 hover:bg-muted/50 rounded px-1 -mr-1"
+                                            className="text-right p-0 min-h-0 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded px-1 -mr-1"
                                         />
                                     </div>
                                     {row.opportunityValue > 1000000 && (
-                                        <div className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" title="High Opportunity" />
+                                        <div className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" title="High Opportunity" />
                                     )}
                                 </td>
                             </tr>
