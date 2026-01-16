@@ -32,29 +32,66 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {/* Header - Enterprise Style */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-border/40">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#0f172a] dark:text-white flex items-center gap-2">
-            <div className="h-8 w-1 bg-primary rounded-full" />
-            Executive Overview
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1 ml-3">Métricas de Desempenho da Cadeia de Suprimentos • Jan 2026</p>
+      {/* Header - Enterprise Style with Control Bar */}
+      <div className="flex flex-col gap-6 pb-6 border-b border-border/40">
+
+        {/* Top Section: Title & Last Sync */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
+              <div className="h-8 w-1.5 bg-gradient-to-b from-primary to-blue-600 rounded-full" />
+              Executive Overview
+            </h1>
+            <p className="text-sm text-muted-foreground mt-2 ml-4">Global Supply Chain Performance Metrics • <span className="font-medium text-foreground">Jan 2026</span></p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-semibold text-muted-foreground/80 bg-muted/40 px-3 py-1.5 rounded-full border border-border/40 flex items-center gap-2">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              System Online
+            </span>
+            <span className="text-xs font-medium text-muted-foreground bg-white dark:bg-slate-900 px-3 py-1.5 rounded-md border border-border/60 shadow-sm">
+              Updated: 10:42 AM
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-medium text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-md border border-border/50">
-            Última sincronização: 10:42
-          </span>
-          <button
-            onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#0f172a] border border-border rounded-md text-sm font-semibold shadow-sm hover:bg-muted/50 transition-all text-foreground"
-          >
-            <Package size={16} className="text-muted-foreground" />
-            Exportar Dados
-          </button>
-          <button className="px-4 py-2 bg-[#0f172a] text-white rounded-md text-sm font-semibold shadow hover:bg-primary/90 transition-all">
-            Baixar Relatório
-          </button>
+
+        {/* Control Bar: Filters & Actions */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white dark:bg-[#0f172a]/50 p-2 rounded-xl border border-border/60 shadow-sm">
+          {/* Filters (Mock) */}
+          <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 px-1">
+            <select className="bg-transparent text-sm font-medium text-muted-foreground hover:text-foreground border-none focus:ring-0 cursor-pointer outline-none">
+              <option>Global View</option>
+              <option>North America</option>
+              <option>Europe</option>
+              <option>LATAM</option>
+            </select>
+            <div className="h-4 w-px bg-border max-md:hidden" />
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md hover:bg-muted/50 transition-colors">
+              Last 30 Days
+            </button>
+            <button className="text-sm font-medium text-foreground bg-white dark:bg-slate-800 shadow-sm border border-border/50 px-3 py-1.5 rounded-md">
+              This Quarter
+            </button>
+            <button className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md hover:bg-muted/50 transition-colors">
+              YTD
+            </button>
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <button
+              onClick={handleExport}
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#0f172a] border border-border/60 rounded-lg text-sm font-semibold shadow-sm hover:bg-muted/30 transition-all text-foreground hover:shadow-md"
+            >
+              <Package size={16} className="text-muted-foreground" />
+              Export CSV
+            </button>
+            <button className="flex-1 md:flex-none px-4 py-2 bg-[#0f172a] hover:bg-primary/90 text-white rounded-lg text-sm font-semibold shadow-md shadow-primary/20 transition-all flex items-center justify-center gap-2">
+              <Archive size={16} className="text-white/80" />
+              Generate Report
+            </button>
+          </div>
         </div>
       </div>
 

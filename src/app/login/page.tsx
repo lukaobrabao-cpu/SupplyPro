@@ -56,15 +56,22 @@ export default function LoginPage() {
 
                     {/* Header */}
                     <div className="flex flex-col items-center mb-8">
-                        <div className="bg-primary/20 p-3 rounded-xl mb-4 border border-primary/20">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                        <div className="bg-primary/20 p-4 rounded-2xl mb-6 border border-primary/20 shadow-lg shadow-primary/10 ring-1 ring-white/10">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
                                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
-                        <h1 className="text-2xl font-bold text-white tracking-tight">SupplyPro Enterprise</h1>
-                        <p className="text-slate-400 text-sm mt-2">Log in to manage your operations</p>
+                        <div className="flex flex-col items-center">
+                            <h1 className="text-3xl font-heading font-bold tracking-tight text-white">
+                                SupplyPro <span className="text-primary">Enterprise</span>
+                            </h1>
+                            <div className="flex items-center gap-2 mt-3">
+                                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Secure Gateway</span>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Form */}
