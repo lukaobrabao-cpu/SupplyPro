@@ -130,19 +130,19 @@ export function ActionPlanGrid() {
                         <thead className="bg-[#1e293b] text-slate-400 uppercase text-[10px] tracking-wider font-bold border-b border-border/50">
                             <tr>
                                 {/* 1. Planner */}
-                                <th className="px-4 py-3 w-[12%] text-left border-r border-border/10">Planner</th>
+                                <th className="px-4 py-3 w-[15%] text-left border-r border-border/10">Planner</th>
                                 {/* 2. Team Leader */}
-                                <th className="px-4 py-3 w-[10%] text-left border-r border-border/10">Team Leader</th>
+                                <th className="px-4 py-3 w-[11%] text-left border-r border-border/10">Team Leader</th>
                                 {/* 3. Processo */}
-                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">Processo</th>
+                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Processo</th>
                                 {/* 4. Fornecedor */}
-                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">Fornecedor</th>
+                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">Fornecedor</th>
                                 {/* 5. PN / Motivo */}
-                                <th className="px-2 py-3 w-[7%] text-center border-r border-border/10">PN / Motivo</th>
+                                <th className="px-2 py-3 w-[6%] text-center border-r border-border/10">PN / Motivo</th>
                                 {/* 6. Índice Atual */}
                                 <th className="px-2 py-3 w-[5%] text-center border-r border-border/10">Ind. Atual</th>
                                 {/* 7. Histórico */}
-                                <th className="px-2 py-3 w-[15%] text-center border-r border-border/10">Histórico de Ações</th>
+                                <th className="px-2 py-3 w-[14%] text-center border-r border-border/10">Histórico de Ações</th>
                                 {/* 8. Índice Final */}
                                 <th className="px-2 py-3 w-[5%] text-center border-r border-border/10">Ind. Final</th>
                                 {/* 9. Início */}
@@ -164,11 +164,11 @@ export function ActionPlanGrid() {
                                 )}>
                                     {/* 1. Planner (Editable) */}
                                     <td className="px-4 py-3 border-r border-slate-700/30 align-middle">
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 w-full">
                                             <EditableCell
                                                 value={row.planner}
                                                 onSave={(v) => handleUpdate(row.id, "planner", v)}
-                                                className="font-bold text-white text-xs w-auto min-w-[80px]"
+                                                className="font-bold text-white text-xs flex-1 text-left truncate hover:bg-white/5 rounded px-1 min-h-[24px]"
                                             />
                                             {/* Planner Level Badge Editable */}
                                             <EditableCell
@@ -177,7 +177,7 @@ export function ActionPlanGrid() {
                                                 type="select"
                                                 options={["JUNIOR", "PLENO", "SENIOR"]}
                                                 className={cn(
-                                                    "px-1.5 py-0.5 rounded-[4px] text-[9px] font-bold uppercase tracking-wider border shadow-sm w-auto min-w-[50px] text-center",
+                                                    "rounded-[4px] text-[9px] font-bold uppercase tracking-wider border shadow-sm w-auto min-w-[50px] text-center flex-none min-h-0 h-6 flex items-center justify-center p-0",
                                                     (row.plannerLevel === "SENIOR") ? "bg-purple-500/20 text-purple-300 border-purple-500/30" :
                                                         (row.plannerLevel === "PLENO") ? "bg-blue-500/20 text-blue-300 border-blue-500/30" :
                                                             "bg-slate-500/20 text-slate-300 border-slate-500/30"
@@ -193,7 +193,7 @@ export function ActionPlanGrid() {
                                             onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
                                             type="select"
                                             options={TL_OPTIONS}
-                                            className="text-slate-400 font-medium text-xs"
+                                            className="text-slate-400 font-medium text-xs text-left w-full hover:bg-white/5 rounded px-1 min-h-[24px]"
                                         />
                                     </td>
 
