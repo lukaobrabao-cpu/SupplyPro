@@ -156,108 +156,126 @@ export function ActionPlanGrid() {
                     <table className="w-full text-[11px] text-left border-collapse table-fixed font-medium">
                         <thead className="bg-[#f1f5f9] dark:bg-[#1e293b] text-[#334155] dark:text-slate-200 uppercase text-[10px] tracking-wider font-bold border-b border-border">
                             <tr>
-                                <th className="px-2 py-2 w-[12%] border-r border-border/50">Processo</th>
-                                <th className="px-2 py-2 w-[10%] border-r border-border/50">Team Leader</th>
-                                <th className="px-2 py-2 w-[10%] border-r border-border/50">Planner</th>
-                                <th className="px-2 py-2 w-[10%] border-r border-border/50">Fornecedor</th>
-                                <th className="px-2 py-2 w-[8%] border-r border-border/50">PN / Motivo</th>
+                                <th className="px-2 py-2 w-[12%] text-center border-r border-border/50">Processo</th>
+                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Team Leader</th>
+                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Planner</th>
+                                <th className="px-2 py-2 w-[10%] text-center border-r border-border/50">Fornecedor</th>
+                                <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">PN / Motivo</th>
                                 <th className="px-2 py-2 w-[7%] text-center border-r border-border/50">Índice Atual</th>
-                                <th className="px-2 py-2 w-[15%] border-r border-border/50">Histórico de Ações</th>
+                                <th className="px-2 py-2 w-[15%] text-left pl-4 border-r border-border/50">Histórico de Ações</th>
                                 <th className="px-2 py-2 w-[7%] text-center border-r border-border/50">Índice Final</th>
                                 <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">Início</th>
                                 <th className="px-2 py-2 w-[8%] text-center border-r border-border/50">Fim</th>
                                 <th className="px-1 py-2 w-[5%] text-center border-r border-border/50">Status</th>
-                                <th className="px-2 py-2 w-[10%]">Observação</th>
+                                <th className="px-2 py-2 w-[10%] text-left pl-4">Observação</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border/30">
                             {paginatedData.map((row, index) => (
                                 <tr key={row.id} className={cn(
-                                    "group transition-colors h-9",
+                                    "group transition-colors h-10", // Increased height slightly for better VX
                                     row.status === "cancelled" ? "opacity-60 bg-red-50/50 dark:bg-red-950/10 grayscale-[0.5]" : "hover:bg-blue-50/50 dark:hover:bg-blue-950/20",
                                     index % 2 === 0 ? "bg-white dark:bg-[#0f172a]" : "bg-[#f8fafc] dark:bg-[#1e293b]/30" // Zebra Striping
                                 )}>
                                     <td className="px-2 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.process}
-                                            onSave={(v) => handleUpdate(row.id, "process", v)}
-                                            type="select"
-                                            options={PROCESS_OPTIONS}
-                                            className="font-bold text-[#0f172a] dark:text-white text-[11px]"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.process}
+                                                onSave={(v) => handleUpdate(row.id, "process", v)}
+                                                type="select"
+                                                options={PROCESS_OPTIONS}
+                                                className="font-semibold text-[#0f172a] dark:text-white text-xs text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-2 py-1.5 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.teamLeader}
-                                            onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
-                                            type="select"
-                                            options={TL_OPTIONS}
-                                            className="text-xs"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.teamLeader}
+                                                onSave={(v) => handleUpdate(row.id, "teamLeader", v)}
+                                                type="select"
+                                                options={TL_OPTIONS}
+                                                className="text-xs text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.planner}
-                                            onSave={(v) => handleUpdate(row.id, "planner", v)}
-                                            type="select"
-                                            options={PLANNER_OPTIONS_MAP[row.teamLeader] || []}
-                                            placeholder="Selecione TL"
-                                            className="text-[11px]"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.planner}
+                                                onSave={(v) => handleUpdate(row.id, "planner", v)}
+                                                type="select"
+                                                options={PLANNER_OPTIONS_MAP[row.teamLeader] || []}
+                                                placeholder="Selecione TL"
+                                                className="text-xs text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.supplier}
-                                            onSave={(v) => handleUpdate(row.id, "supplier", v)}
-                                            placeholder="—"
-                                            className="text-[11px]"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.supplier}
+                                                onSave={(v) => handleUpdate(row.id, "supplier", v)}
+                                                placeholder="—"
+                                                className="text-xs text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.pnOrReason}
-                                            onSave={(v) => handleUpdate(row.id, "pnOrReason", v)}
-                                            placeholder="Motivo"
-                                            className="text-[11px]"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.pnOrReason}
+                                                onSave={(v) => handleUpdate(row.id, "pnOrReason", v)}
+                                                placeholder="Motivo"
+                                                className="text-xs text-center justify-center"
+                                            />
+                                        </div>
                                     </td>
-                                    <td className="px-2 py-0 text-center font-semibold text-xs text-[#0f172a] dark:text-white bg-blue-50/30 dark:bg-blue-900/10 border-r border-border/30">
-                                        {row.currentIndex}
+                                    <td className="px-2 py-0 text-center text-xs font-semibold text-[#0f172a] dark:text-white bg-blue-50/30 dark:bg-blue-900/10 border-r border-border/30 h-full align-middle">
+                                        <div className="flex items-center justify-center h-full">
+                                            {row.currentIndex}
+                                        </div>
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30">
                                         <EditableCell
                                             value={row.history}
                                             onSave={(v) => handleUpdate(row.id, "history", v)}
                                             placeholder="Descrever..."
-                                            className="text-[#334155] dark:text-slate-200 focus:text-foreground text-[11px] font-medium"
+                                            className="text-[#334155] dark:text-slate-200 focus:text-foreground text-xs font-medium pl-2"
                                         />
                                     </td>
                                     <td className="px-2 py-0 border-r border-border/30 text-center">
-                                        <EditableCell
-                                            value={row.finalIndex}
-                                            onSave={(v) => handleUpdate(row.id, "finalIndex", v)}
-                                            placeholder="—"
-                                            className={cn("font-bold text-center text-[10px]", row.finalIndex ? "text-emerald-700 dark:text-emerald-400" : "")}
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.finalIndex}
+                                                onSave={(v) => handleUpdate(row.id, "finalIndex", v)}
+                                                placeholder="—"
+                                                className={cn("font-bold text-center justify-center text-xs", row.finalIndex ? "text-emerald-700 dark:text-emerald-400" : "")}
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-1 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.startDate}
-                                            onSave={(v) => handleUpdate(row.id, "startDate", v)}
-                                            type="date"
-                                            className="text-[10px] text-center p-0"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.startDate}
+                                                onSave={(v) => handleUpdate(row.id, "startDate", v)}
+                                                type="date"
+                                                className="text-[10px] text-center justify-center p-0"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-1 py-0 border-r border-border/30">
-                                        <EditableCell
-                                            value={row.endDate}
-                                            onSave={(v) => handleUpdate(row.id, "endDate", v)}
-                                            type="date"
-                                            className="text-[10px] text-center p-0"
-                                        />
+                                        <div className="flex justify-center">
+                                            <EditableCell
+                                                value={row.endDate}
+                                                onSave={(v) => handleUpdate(row.id, "endDate", v)}
+                                                type="date"
+                                                className="text-[10px] text-center justify-center p-0"
+                                            />
+                                        </div>
                                     </td>
                                     <td className="px-1 py-0 text-center border-r border-border/30 bg-white/50 dark:bg-black/20">
-                                        <div className="flex justify-center scale-75">
+                                        <div className="flex justify-center items-center h-full">
                                             <StatusToggle
                                                 status={row.status}
                                                 onToggle={(s) => handleUpdate(row.id, "status", s)}
@@ -269,7 +287,7 @@ export function ActionPlanGrid() {
                                             value={row.observation}
                                             onSave={(v) => handleUpdate(row.id, "observation", v)}
                                             placeholder="..."
-                                            className="text-[10px] text-muted-foreground"
+                                            className="text-xs text-muted-foreground pl-2"
                                         />
                                     </td>
                                 </tr>

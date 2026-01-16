@@ -94,12 +94,12 @@ export function StatusToggle({ status, onToggle, readonly }: { status: StatusTyp
         >
             {/* Custom SVG Icons to match the "Circle" requirement perfectly */}
             {status === "not_started" && (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
                     <circle cx="12" cy="12" r="9" />
                 </svg>
             )}
             {status === "in_progress" && (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-blue-600">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-blue-600">
                     <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" strokeWidth="2" />
                     <path d="M12 3v9h9" fill="currentColor" fillOpacity="0.5" />
                     {/* Visual approximation of 1/4 pie */}
@@ -107,19 +107,19 @@ export function StatusToggle({ status, onToggle, readonly }: { status: StatusTyp
                 </svg>
             )}
             {status === "nearly_done" && (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-blue-800">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-blue-800">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
                     <path d="M12 3A9 9 0 1 1 3 12L12 12V3Z" fill="currentColor" />
                 </svg>
             )}
             {status === "completed" && (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
                     <circle cx="12" cy="12" r="9" fill="currentColor" />
                     <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             )}
             {status === "cancelled" && (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-rose-500 group-hover:text-rose-600">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-rose-500 group-hover:text-rose-600">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
                     <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
