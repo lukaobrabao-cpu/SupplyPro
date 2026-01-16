@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Trophy, Medal, Star, TrendingUp, ArrowUp, ArrowDown, Shield } from "lucide-react";
+import { Trophy, Medal, Star, TrendingUp, ArrowUp, ArrowDown, Shield, Crown, Sparkles } from "lucide-react";
 
 // ... imports
 
@@ -31,7 +31,7 @@ export const RANKING_DATA: PlannerRank[] = [
 ];
 
 // ... imports
-import { Crown, Sparkles, TrendingUp } from "lucide-react";
+
 
 // ... interfaces (PlannerRank)
 
