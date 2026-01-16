@@ -10,9 +10,10 @@ interface EditableCellProps extends React.InputHTMLAttributes<HTMLInputElement |
     options?: string[]; // For select type
     className?: string;
     placeholder?: string;
+    formatter?: (value: string | number) => string;
 }
 
-export function EditableCell({ value: initialValue, onSave, type = "text", options, className, placeholder, ...props }: EditableCellProps) {
+export function EditableCell({ value: initialValue, onSave, type = "text", options, className, placeholder, formatter, ...props }: EditableCellProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(initialValue);
     const inputRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
@@ -82,6 +83,8 @@ export function EditableCell({ value: initialValue, onSave, type = "text", optio
         );
     }
 
+    const displayValue = formatter ? formatter(value) : value;
+
     return (
         <div
             onClick={() => setIsEditing(true)}
@@ -91,7 +94,7 @@ export function EditableCell({ value: initialValue, onSave, type = "text", optio
                 className
             )}
         >
-            {value || placeholder || "—"}
+            {displayValue || placeholder || "—"}
         </div>
     );
 }

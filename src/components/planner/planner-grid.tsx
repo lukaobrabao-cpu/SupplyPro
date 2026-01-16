@@ -231,11 +231,11 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 {/* Leftovers Value */}
                                 <td className="px-4 py-3 text-right font-medium text-foreground/80 tabular-nums min-w-[120px]">
                                     <div className="flex items-center justify-end gap-1 group/edit cursor-pointer">
-                                        <span className="text-[10px] text-muted-foreground pt-0.5">R$</span>
                                         <EditableCell
                                             type="number"
                                             value={row.leftoversValue}
                                             onSave={(val) => onDataChange(row.id, 'leftoversValue', Number(val))}
+                                            formatter={(val) => formatCurrency(Number(val))}
                                             className="text-right p-0 min-h-0 hover:bg-muted/50 rounded px-1 -mr-1"
                                         />
                                     </div>
@@ -244,11 +244,11 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 {/* Opportunity Value */}
                                 <td className="px-4 py-3 text-right font-bold text-emerald-600 dark:text-emerald-400 tabular-nums relative min-w-[140px]">
                                     <div className="flex items-center justify-end gap-1">
-                                        <span className="text-[10px] text-emerald-600/70 dark:text-emerald-400/70 pt-0.5">R$</span>
                                         <EditableCell
                                             type="number"
                                             value={row.opportunityValue}
                                             onSave={(val) => onDataChange(row.id, 'opportunityValue', Number(val))}
+                                            formatter={(val) => formatCurrency(Number(val))}
                                             className="text-right p-0 min-h-0 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded px-1 -mr-1"
                                         />
                                     </div>
