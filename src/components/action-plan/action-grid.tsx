@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Plus, Search, Filter, Save, AlertCircle, Calendar } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { Plus, Search, Filter, Save, AlertCircle, Calendar, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EditableCell } from "./editable-cell";
 import { StatusToggle, StatusType } from "./status-indicator";
+import { supabase } from "@/lib/supabase";
 
 interface ActionRow {
     id: string;
     process: string;
     teamLeader: string;
     planner: string;
-    plannerLevel?: "JUNIOR" | "PLENO" | "SENIOR"; // Added for styling
+    plannerLevel?: "JUNIOR" | "PLENO" | "SENIOR";
     supplier: string;
     pnOrReason: string;
     currentIndex: string;
@@ -27,25 +28,68 @@ interface ActionRow {
 const PROCESS_OPTIONS = ["OTIF", "Inconsistências NF", "Inventário S&OP", "Atrasos"];
 const TL_OPTIONS = ["Carlos Mendes", "Mariana Costa", "Wilson", "Director Level"];
 
-const INITIAL_DATA: ActionRow[] = [
-    { id: "1", process: "OTIF", teamLeader: "Wilson Silva", planner: "Henrique Fernando", plannerLevel: "PLENO", supplier: "Romi", pnOrReason: "-", currentIndex: "R$ 2M", history: "Descrever ações", finalIndex: "1.3M", startDate: "2026-01-15", endDate: "", status: "not_started", observation: "Adicionar nota..." },
-    { id: "2", process: "OTIF", teamLeader: "Carlos Mendes", planner: "Thales Fazzini", plannerLevel: "SENIOR", supplier: "Tech", pnOrReason: "Late", currentIndex: "92%", history: "Meeting scheduled", finalIndex: "", startDate: "2026-01-10", endDate: "2026-01-20", status: "in_progress", observation: "" },
-    { id: "3", process: "Inconsistências NF", teamLeader: "Leopoldo Garcez", planner: "Priscilla de Padilla", plannerLevel: "PLENO", supplier: "LogiTrans", pnOrReason: "Doc Error", currentIndex: "15", history: "Correção solicitada", finalIndex: "0", startDate: "2026-01-05", endDate: "2026-01-08", status: "completed", observation: "Resolvido" },
-    { id: "4", process: "Inventário S&OP", teamLeader: "Lucas Cerqueira", planner: "Marcio Donizeti", plannerLevel: "JUNIOR", supplier: "-", pnOrReason: "Review", currentIndex: "98%", history: "Analysis pending", finalIndex: "", startDate: "", endDate: "", status: "nearly_done", observation: "" },
-    { id: "5", process: "Atrasos", teamLeader: "Wilson Silva", planner: "Michel Robson", plannerLevel: "SENIOR", supplier: "Bolt Co.", pnOrReason: "Production", currentIndex: "5 days", history: "Expediting", finalIndex: "2 days", startDate: "2026-01-12", endDate: "", status: "in_progress", observation: "Urgent" },
-];
-
 export function ActionPlanGrid() {
-    // ... state (keep same)
-    const [data, setData] = useState<ActionRow[]>(INITIAL_DATA);
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    const [data, setData] = useState<ActionRow[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterProcess, setFilterProcess] = useState("All");
     const [filterTL, setFilterTL] = useState("All");
+    const [isSaving, setIsSaving] = useState(false);
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
+
+    useEffect(() => {
+        fetchActions();
+    }, []);
+
+    const fetchActions = async () => {
+        setIsLoading(true);
+        const { data: dbData, error } = await supabase
+            .from('action_plans')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Error fetching actions:', error);
+            // Consider showing a toast error here
+        }
+
+        if (dbData) {
+            const formattedData: ActionRow[] = dbData.map((item: any) => ({
+                id: item.id,
+                process: item.process,
+                teamLeader: item.team_leader,
+                planner: item.planner,
+                plannerLevel: item.planner_level,
+                supplier: item.supplier,
+                pnOrReason: item.pn_or_reason,
+                currentIndex: item.current_index,
+                history: item.history,
+                finalIndex: item.final_index,
+                startDate: item.start_date,
+                endDate: item.end_date,
+                status: item.status,
+                observation: item.observation,
+            }));
+            setData(formattedData);
+        }
+        setIsLoading(false);
+    };
+
+    const mapFieldToDb = (field: keyof ActionRow) => {
+        const mapping: Record<string, string> = {
+            teamLeader: 'team_leader',
+            plannerLevel: 'planner_level',
+            pnOrReason: 'pn_or_reason',
+            currentIndex: 'current_index',
+            finalIndex: 'final_index',
+            startDate: 'start_date',
+            endDate: 'end_date',
+        };
+        return mapping[field] || field;
+    };
 
     const filteredData = useMemo(() => {
         return data.filter(row => {
@@ -61,48 +105,87 @@ export function ActionPlanGrid() {
 
     const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-    const handleUpdate = (id: string, field: keyof ActionRow, value: any) => {
+    const handleUpdate = async (id: string, field: keyof ActionRow, value: any) => {
+        // Optimistic Update
         setData(prev => prev.map(row => {
             if (row.id === id) {
                 return { ...row, [field]: value };
             }
             return row;
         }));
-        setHasUnsavedChanges(true);
+
+        setIsSaving(true);
+        const dbField = mapFieldToDb(field);
+
+        const { error } = await supabase
+            .from('action_plans')
+            .update({ [dbField]: value })
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error updating action:', error);
+            // Revert on error? For now just log.
+        }
+        setIsSaving(false);
     };
 
-    const handleAddRow = () => {
-        const newRow: ActionRow = {
-            id: Math.random().toString(36).substr(2, 9),
+    const handleAddRow = async () => {
+        const newAction = {
             process: "OTIF",
-            teamLeader: "-",
-            planner: "-",
-            plannerLevel: "JUNIOR",
+            team_leader: "-",
+            planner: "Novo Planner",
+            planner_level: "JUNIOR",
             supplier: "",
-            pnOrReason: "",
-            currentIndex: "-",
+            pn_or_reason: "",
+            current_index: "-",
             history: "",
-            finalIndex: "",
-            startDate: new Date().toISOString().split('T')[0],
-            endDate: "",
+            final_index: "",
+            start_date: new Date().toISOString().split('T')[0],
+            end_date: "",
             status: "not_started",
-            observation: "",
-            isNew: true
+            observation: ""
         };
-        setData([newRow, ...data]);
-        setHasUnsavedChanges(true);
+
+        const { data: insertedRow, error } = await supabase
+            .from('action_plans')
+            .insert([newAction])
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Error creating action:', error);
+            return;
+        }
+
+        if (insertedRow) {
+            const mappedRow: ActionRow = {
+                id: insertedRow.id,
+                process: insertedRow.process,
+                teamLeader: insertedRow.team_leader,
+                planner: insertedRow.planner,
+                plannerLevel: insertedRow.planner_level,
+                supplier: insertedRow.supplier,
+                pnOrReason: insertedRow.pn_or_reason,
+                currentIndex: insertedRow.current_index,
+                history: insertedRow.history,
+                finalIndex: insertedRow.final_index,
+                startDate: insertedRow.start_date,
+                endDate: insertedRow.end_date,
+                status: insertedRow.status as StatusType,
+                observation: insertedRow.observation,
+                isNew: true
+            };
+            setData([mappedRow, ...data]);
+        }
     };
 
-    const handleSave = () => {
-        setTimeout(() => {
-            setHasUnsavedChanges(false);
-            setData(prev => prev.map(r => ({ ...r, isNew: false })));
-        }, 500);
-    };
+    if (isLoading) {
+        return <div className="flex justify-center items-center h-64"><Loader2 className="animate-spin text-primary" size={32} /></div>;
+    }
 
     return (
         <div className="space-y-4">
-            {/* Toolbar - Keep same */}
+            {/* Toolbar */}
             <div className="flex flex-col lg:flex-row gap-4 items-center justify-between bg-card p-4 rounded-xl border border-border shadow-sm">
                 <div className="flex flex-wrap gap-2 w-full lg:w-auto">
                     <select className="bg-background border border-border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 outline-none" value={filterProcess} onChange={(e) => setFilterProcess(e.target.value)}>
@@ -262,11 +345,11 @@ export function ActionPlanGrid() {
                     </table>
                 </div>
                 {/* Save Toast (Keep same) */}
-                {hasUnsavedChanges && (
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-foreground text-background px-6 py-2 rounded-full shadow-lg flex items-center gap-3 animate-in slide-in-from-bottom-2 fade-in z-50">
-                        <AlertCircle size={16} className="text-yellow-400" />
-                        <span className="text-sm font-medium">Unsaved changes</span>
-                        <button onClick={handleSave} className="ml-2 px-3 py-1 bg-primary text-white rounded text-xs font-bold hover:bg-primary/90">Save</button>
+                {/* Save Toast Removed - Auto-saving */}
+                {isSaving && (
+                    <div className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-full shadow-lg flex items-center gap-2 animate-in slide-in-from-bottom-2 fade-in z-50 text-xs font-medium">
+                        <Loader2 size={12} className="animate-spin" />
+                        Saving...
                     </div>
                 )}
             </div>
