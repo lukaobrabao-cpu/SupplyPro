@@ -118,12 +118,12 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                             <tr key={row.id} className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors group">
                                 {/* Planner */}
                                 <td className="px-4 py-3 min-w-[200px]">
-                                    <div className="flex flex-col gap-1">
+                                    <div className="flex flex-col gap-1.5">
                                         <div className="flex items-center gap-2">
                                             <EditableCell
                                                 value={row.plannerName}
                                                 onSave={(val) => onDataChange(row.id, 'plannerName', val)}
-                                                className="font-semibold text-foreground text-sm"
+                                                className="font-semibold text-foreground text-sm p-0 min-h-0 hover:bg-transparent hover:underline decoration-dashed decoration-muted-foreground/30 underline-offset-4"
                                             />
                                             <EditableCell
                                                 type="select"
@@ -131,7 +131,7 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                                 value={row.plannerLevel}
                                                 onSave={(val) => onDataChange(row.id, 'plannerLevel', val)}
                                                 className={cn(
-                                                    "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center",
+                                                    "text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide border w-[60px] text-center min-h-0 h-auto",
                                                     row.plannerLevel === 'Senior' ? "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800" :
                                                         row.plannerLevel === 'Pleno' ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800" :
                                                             "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
@@ -142,38 +142,45 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 </td>
 
                                 {/* Team Leader */}
-                                <td className="px-4 py-3 text-muted-foreground font-medium text-xs min-w-[150px]">
+                                <td className="px-4 py-3 min-w-[150px]">
                                     <EditableCell
                                         value={row.teamLeader}
                                         onSave={(val) => onDataChange(row.id, 'teamLeader', val)}
+                                        className="text-muted-foreground font-medium text-xs p-0 min-h-0 hover:bg-transparent hover:text-primary transition-colors"
                                     />
                                 </td>
 
                                 {/* Qty Suppliers */}
                                 <td className="px-4 py-3 text-center w-[100px]">
-                                    <EditableCell
-                                        type="number"
-                                        value={row.qtySuppliers}
-                                        onSave={(val) => onDataChange(row.id, 'qtySuppliers', Number(val))}
-                                        className="text-center bg-slate-100 dark:bg-slate-800 border-border"
-                                    />
+                                    <div className="flex justify-center">
+                                        <EditableCell
+                                            type="number"
+                                            value={row.qtySuppliers}
+                                            onSave={(val) => onDataChange(row.id, 'qtySuppliers', Number(val))}
+                                            className="text-center bg-slate-100 dark:bg-slate-800 border border-border rounded-md px-2 py-0.5 text-xs font-bold min-h-fit w-auto inline-block hover:border-primary/50"
+                                        />
+                                    </div>
                                 </td>
 
                                 {/* OTIF < 95 (Critical) */}
                                 <td className="px-4 py-3 text-center w-[120px]">
-                                    <div className={cn(
-                                        "flex items-center justify-center gap-1.5 px-2 py-1 rounded-full text-xs font-bold border transition-all",
-                                        row.suppliersOtifLow > 0
-                                            ? "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-900 shadow-sm"
-                                            : "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-900"
-                                    )}>
-                                        {row.suppliersOtifLow > 0 ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}
-                                        <EditableCell
-                                            type="number"
-                                            value={row.suppliersOtifLow}
-                                            onSave={(val) => onDataChange(row.id, 'suppliersOtifLow', Number(val))}
-                                            className="w-8 text-center bg-transparent border-none p-0 focus:ring-0"
-                                        />
+                                    <div className="flex justify-center">
+                                        <div className={cn(
+                                            "flex items-center justify-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-bold border transition-all w-fit pointer-events-none",
+                                            row.suppliersOtifLow > 0
+                                                ? "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-900 shadow-sm"
+                                                : "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-900"
+                                        )}>
+                                            {row.suppliersOtifLow > 0 ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}
+                                            <div className="pointer-events-auto">
+                                                <EditableCell
+                                                    type="number"
+                                                    value={row.suppliersOtifLow}
+                                                    onSave={(val) => onDataChange(row.id, 'suppliersOtifLow', Number(val))}
+                                                    className="w-6 text-center bg-transparent border-none p-0 min-h-0 hover:bg-black/5 rounded-sm"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
 
@@ -184,7 +191,10 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                             type="number"
                                             value={row.inconsistencies}
                                             onSave={(val) => onDataChange(row.id, 'inconsistencies', Number(val))}
-                                            className={cn("text-center w-12", row.inconsistencies > 0 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-muted-foreground")}
+                                            className={cn(
+                                                "text-center w-10 p-0 min-h-0 hover:bg-muted/50 rounded",
+                                                row.inconsistencies > 0 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-muted-foreground"
+                                            )}
                                         />
                                         {row.inconsistencies > 0 && <AlertTriangle size={12} className="text-amber-500" />}
                                     </div>
@@ -196,7 +206,11 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                         type="number"
                                         value={row.shortages}
                                         onSave={(val) => onDataChange(row.id, 'shortages', Number(val))}
-                                        className={cn("text-center font-bold", row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground")}
+                                        className={cn(
+                                            "text-center w-full p-0 min-h-0 hover:bg-muted/50 rounded",
+                                            "font-bold tabular-nums",
+                                            row.shortages > 5 ? "text-rose-600 dark:text-rose-400" : "text-foreground"
+                                        )}
                                     />
                                 </td>
 
@@ -206,19 +220,19 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                         type="number"
                                         value={row.linesDelayed}
                                         onSave={(val) => onDataChange(row.id, 'linesDelayed', Number(val))}
-                                        className="text-center text-muted-foreground"
+                                        className="text-center text-muted-foreground p-0 min-h-0 hover:bg-muted/50 rounded"
                                     />
                                 </td>
 
                                 {/* Leftovers Value */}
                                 <td className="px-4 py-3 text-right font-medium text-emerald-600 dark:text-emerald-400 tabular-nums min-w-[120px]">
-                                    <div className="flex items-center justify-end gap-1">
-                                        <span className="text-[10px] text-muted-foreground">R$</span>
+                                    <div className="flex items-center justify-end gap-1 group/edit cursor-pointer">
+                                        <span className="text-[10px] text-muted-foreground pt-0.5">R$</span>
                                         <EditableCell
                                             type="number"
                                             value={row.leftoversValue}
                                             onSave={(val) => onDataChange(row.id, 'leftoversValue', Number(val))}
-                                            className="text-right"
+                                            className="text-right p-0 min-h-0 hover:bg-muted/50 rounded px-1 -mr-1"
                                         />
                                     </div>
                                 </td>
@@ -226,12 +240,12 @@ export function PlannerGrid({ data, onDataChange }: PlannerGridProps) {
                                 {/* Opportunity Value */}
                                 <td className="px-4 py-3 text-right font-bold text-foreground tabular-nums relative min-w-[140px]">
                                     <div className="flex items-center justify-end gap-1">
-                                        <span className="text-[10px] text-muted-foreground">R$</span>
+                                        <span className="text-[10px] text-muted-foreground pt-0.5">R$</span>
                                         <EditableCell
                                             type="number"
                                             value={row.opportunityValue}
                                             onSave={(val) => onDataChange(row.id, 'opportunityValue', Number(val))}
-                                            className="text-right"
+                                            className="text-right p-0 min-h-0 hover:bg-muted/50 rounded px-1 -mr-1"
                                         />
                                     </div>
                                     {row.opportunityValue > 1000000 && (
